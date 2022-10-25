@@ -93,7 +93,12 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h1 id="copy-to-hexo-py"><a href="#copy-to-hexo-py" class="headerlink" title="copy_to_hexo.py"></a>copy_to_hexo.py</h1><p>import os<br>import shutil<br>import time</p>
+<p>def copy_to_hexo():<br>    local_list &#x3D; os.listdir(LOCAL_ARTICLE_PATH)<br>    hexo_list &#x3D; os.listdir(HEXO_ARTICLE_PATH)<br>    flag &#x3D; True<br>    for file in local_list:<br>        if file in IGNORE_LIST:<br>            continue<br>        if file.endswith(‘.md’):<br>            local_version &#x3D; os.path.join(LOCAL_ARTICLE_PATH, file)<br>            hexo_version &#x3D; os.path.join(HEXO_ARTICLE_PATH, file)<br>            if file not in hexo_list:<br>                flag &#x3D; False<br>                print(“新增文章: %s…” % file,<br>                      “最后修改时间：%s” % TimeStampFormat(os.path.getmtime(local_version)))<br>                shutil.copy(local_version, hexo_version)<br>            elif os.path.getmtime(local_version) &gt; os.path.getmtime(hexo_version):<br>                flag &#x3D; False<br>                print(“更新文章: %s…” % file,<br>                      “上次修改时间：%s” % TimeStampFormat(os.path.getmtime(hexo_version)),<br>                      “最后修改时间：%s” % TimeStampFormat(os.path.getmtime(local_version)))<br>                shutil.copy(local_version, hexo_version)<br>    print(‘文章无变化’ if flag else ‘更新完毕’)</p>
+<h1 id="时间格式标准化"><a href="#时间格式标准化" class="headerlink" title="时间格式标准化"></a>时间格式标准化</h1><p>def TimeStampFormat(timestamp):<br>    return time.strftime(‘%Y-%m-%d %H:%M:%S’, time.localtime(timestamp))</p>
+<p>IGNORE_LIST &#x3D; [‘欢迎使用Markdown编辑器.md’]<br>HEXO_ARTICLE_PATH &#x3D; ‘D:\hexoblog\source_posts’<br>LOCAL_ARTICLE_PATH &#x3D; ‘D:&#x2F;Markdown’</p>
+<p>copy_to_hexo()</p>
+
       
     </div>
     <footer class="article-footer">
